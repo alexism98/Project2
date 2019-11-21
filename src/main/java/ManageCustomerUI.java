@@ -111,57 +111,53 @@ public class ManageCustomerUI {
     class SaveButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            ProductModel product = new ProductModel();
+            CustomerModel customer = new CustomerModel();
             Gson gson = new Gson();
             String id = txtCustomerID.getText();
 
             if (id.length() == 0) {
-                JOptionPane.showMessageDialog(null, "ProductID cannot be null!");
+                JOptionPane.showMessageDialog(null, "CustomerID cannot be null!");
                 return;
             }
 
             try {
-                product.mProductID = Integer.parseInt(id);
+                customer.mCustomerID = Integer.parseInt(id);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "ProductID is invalid!");
+                JOptionPane.showMessageDialog(null, "CustomerID is invalid!");
                 return;
             }
 
             String name = txtName.getText();
             if (name.length() == 0) {
-                JOptionPane.showMessageDialog(null, "Product name cannot be empty!");
+                JOptionPane.showMessageDialog(null, "Customer name cannot be empty!");
                 return;
             }
 
-            product.mName = name;
+            customer.mName = name;
 
-            String price = txtPhone.getText();
-            try {
-                product.mPrice = Double.parseDouble(price);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Price is invalid!");
+            String phone = txtPhone.getText();
+            if (phone.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Phone cannot be empty!");
                 return;
             }
 
-            String quant = txtAddress.getText();
-            try {
-                product.mQuantity = Double.parseDouble(quant);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Quantity is invalid!");
+            String address = txtAddress.getText();
+            if (address.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Address cannot be empty!");
                 return;
             }
 
             try {
                 MessageModel msg = new MessageModel();
-                msg.code = MessageModel.PUT_PRODUCT;
-                msg.data = gson.toJson(product);
+                msg.code = MessageModel.PUT_CUSTOMER;
+                msg.data = gson.toJson(customer);
 
 //                msg = StoreManager.getInstance().getNetworkAdapter().send(msg, "localhost", 1000);
 
                 if (msg.code == MessageModel.OPERATION_FAILED)
-                    JOptionPane.showMessageDialog(null, "Product is NOT saved successfully!");
+                    JOptionPane.showMessageDialog(null, "Customer is NOT saved successfully!");
                 else
-                    JOptionPane.showMessageDialog(null, "Product is SAVED successfully!");
+                    JOptionPane.showMessageDialog(null, "Customer is SAVED successfully!");
 
             } catch (Exception e) {
                 e.printStackTrace();
